@@ -8,7 +8,6 @@ pipeline {
     environment {
         IMAGE_TAG = "v${BUILD_NUMBER}"
         GITHUB_CRED = credentials("github")
-        DOCKER_CRED = credentials("docker")
     }
 
     stages {
@@ -36,11 +35,12 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                script {
-                    docker.withRegistry('', 'docker') {
-                        def image = docker.build("mostafamohamed2001/lab2-cicd22:${IMAGE_TAG}")
-                        image.push()
-                    }
+                withCredentials([string(credentialsId: 'docker', variable: 'DOCKER_TOKEN')]) {
+                    sh '''
+                        echo "$DOCKER_TOKEN" | docker login -u mostafamohamed2001 --password-stdin
+                        docker build -t mostafamohamed2001/lab2-cicd22:${IMAGE_TAG} .
+                        docker push mostafamohamed2001/lab2-cicd22:${IMAGE_TAG}
+                    '''
                 }
             }
         }
