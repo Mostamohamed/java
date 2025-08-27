@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Mostamohamed/lab2-cicd22.git',
+                    url: 'https://github.com/Mostamohamed/java.git',
                     credentialsId: 'github'
             }
         }
