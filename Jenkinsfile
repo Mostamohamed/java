@@ -16,7 +16,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Mostamohamed/lab2-cicd.git',
+                    url: 'https://github.com/Mostamohamed/lab2-cicd22.git',
                     credentialsId: 'github'
             }
         }
@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker') {
-                        def image = docker.build("mostafamohamed2001/lab2-cicd:${IMAGE_TAG}")
+                        def image = docker.build("mostafamohamed2001/lab2-cicd22:${IMAGE_TAG}")
                         image.push()
                     }
                 }
